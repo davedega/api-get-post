@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Test_CPRN</title>
+
+<script language="javascript">
+
+function awesomeFunction() {
+  function createNode(element) {
+      return document.createElement(element);
+  }
+
+  function append(parent, el) {
+    return parent.appendChild(el);
+  }
+
+  const ul = document.getElementById('emails');
+  const url = 'Test_CPRN.json';
+  fetch(url)
+  .then((resp) => resp.json())
+  .then(function(data) {
+    let emails = data;
+    return emails.map(function(email) {
+      let li = createNode('li'),
+          span = createNode('span');
+      span.innerHTML = `${email}`;
+      append(li, span);
+      append(ul, li);
+    })
+  })
+  .catch(function(error) {
+    console.log(error);
+  });	
+}
+
+function ready(fn) {
+  if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading"){
+    fn();
+  } else {
+    document.addEventListener('DOMContentLoaded', fn);
+  }
+}
+
+ready(awesomeFunction);		
+</script>
+
+</head>
+
+<body>
+
+  <h1>List of email addresses</h1>
+  <ul id="emails"></ul>
+
+</body>
+</html>
